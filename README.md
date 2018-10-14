@@ -3,7 +3,7 @@
 
 This simple library prints, based on set LogLevel, nice formatted to terminal
 
-![Screenshot](https://github.com/altafino/logger/screenshot.png)
+![Screenshot](https://github.com/altafino/logger/blob/master/screenshot.png)
 
 #### usage
 
