@@ -16,7 +16,7 @@ type Level int
 
 const (
 	InfoLevel     Level = 0
-	HttpLevel	Level=1 // Special Info Level for eg HTTP
+	HttpLevel     Level = 1 // Special Info Level for eg HTTP
 	ErrorLevel    Level = 2
 	CriticalLevel Level = 3
 	DebugLevel    Level = 4
@@ -94,10 +94,9 @@ func Critical(interf ...interface{}) {
 	}
 }
 
-
 func printlog(level Level, interf ...interface{}) {
 
-	if LoggerSettings.Level==Disabled {
+	if LoggerSettings.Level == Disabled {
 		return
 	}
 
