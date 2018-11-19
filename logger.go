@@ -84,13 +84,13 @@ func Debug(interf ...interface{}) {
 
 func Error(interf ...interface{}) {
 	if checkLevel(DebugLevel) {
-		printlog(DebugLevel, interf)
+		printlog(ErrorLevel, interf)
 	}
 }
 
 func Critical(interf ...interface{}) {
 	if checkLevel(DebugLevel) {
-		printlog(DebugLevel, interf)
+		printlog(CriticalLevel, interf)
 	}
 }
 
