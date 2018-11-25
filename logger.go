@@ -9,6 +9,7 @@ package logger
 import (
 	"fmt"
 	"github.com/fatih/color"
+	"github.com/hokaccha/go-prettyjson"
 	"time"
 )
 
@@ -47,9 +48,17 @@ const (
 	Json     Output = 1
 )
 
+type TerminalStyle int
+
+const (
+	FlatStyle TerminalStyle = 0
+	JsonStyle TerminalStyle = 1
+)
+
 type Settings struct {
-	Level  Level
-	Output Output
+	Level         Level
+	Output        Output
+	TerminalStyle TerminalStyle
 }
 
 var LoggerSettings Settings
@@ -59,6 +68,7 @@ func InitLogger(settings Settings) {
 	loggerSettings := Settings{
 		Level:  settings.Level,
 		Output: settings.Output,
+		TerminalStyle: settings.TerminalStyle,
 	}
 	LoggerSettings = loggerSettings
 
@@ -121,7 +131,12 @@ func printlog(level Level, interf ...interface{}) {
 	fmt.Print(" [", level.String(), "]")
 	color.Unset()
 	for _, v := range interf {
-		fmt.Print(" ", v)
+		s, err := prettyjson.Marshal(v)
+		if err != nil || LoggerSettings.TerminalStyle == FlatStyle {
+			fmt.Print(" ", v)
+		} else {
+			fmt.Println(string(s))
+		}
 	}
 	fmt.Println()
 }
