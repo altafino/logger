@@ -25,6 +25,6 @@ func Logger(next http.Handler) http.Handler {
 
 		latency := time.Since(start)
 
-		logger.Http( r.Method + "]",ww.Status(),  r.RemoteAddr, r.RequestURI, requestID, latency)
+		logger.Http( r.Method,ww.Status(),  r.RemoteAddr, r.RequestURI, requestID, latency)
 	})
 }
