@@ -7,7 +7,7 @@
 package middleware
 
 import (
-	"github.com/altafino/logger"
+	"altafino.io/logger"
 	"github.com/go-chi/chi/middleware"
 	"net/http"
 	"time"
