@@ -131,11 +131,15 @@ func printlog(level Level, interf ...interface{}) {
 	fmt.Print(" [", level.String(), "]")
 	color.Unset()
 	for _, v := range interf {
-		s, err := prettyjson.Marshal(v)
-		if err != nil || LoggerSettings.TerminalStyle == FlatStyle {
+		if LoggerSettings.TerminalStyle == FlatStyle {
 			fmt.Print(" ", v)
 		} else {
-			fmt.Println(string(s))
+			s, err := prettyjson.Marshal(v)
+			if err != nil {
+				fmt.Print(" ", v)
+			} else {
+				fmt.Println(string(s))
+			}
 		}
 	}
 	fmt.Println()
