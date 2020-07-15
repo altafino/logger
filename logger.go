@@ -8,9 +8,10 @@ package logger
 
 import (
 	"fmt"
+	"time"
+
 	"github.com/fatih/color"
 	"github.com/hokaccha/go-prettyjson"
-	"time"
 )
 
 type Level int
@@ -21,7 +22,8 @@ const (
 	ErrorLevel    Level = 2
 	CriticalLevel Level = 3
 	DebugLevel    Level = 4
-	Disabled      Level = 5
+	OnlyLevel     Level = 5
+	Disabled      Level = 6
 )
 
 func (level Level) String() string {
@@ -32,6 +34,7 @@ func (level Level) String() string {
 		"ERROR   ",
 		"CRITICAL",
 		"DEBUG   ",
+		"ONLY",
 		"DISABLED",
 	}
 
@@ -66,12 +69,18 @@ var LoggerSettings Settings
 func InitLogger(settings Settings) {
 
 	loggerSettings := Settings{
-		Level:  settings.Level,
-		Output: settings.Output,
+		Level:         settings.Level,
+		Output:        settings.Output,
 		TerminalStyle: settings.TerminalStyle,
 	}
 	LoggerSettings = loggerSettings
 
+}
+
+func Only(interf ...interface{}) {
+	if checkLevel(OnlyLevel) {
+		printlog(OnlyLevel, interf)
+	}
 }
 
 func Info(interf ...interface{}) {
@@ -93,15 +102,15 @@ func Debug(interf ...interface{}) {
 }
 
 func Error(interf ...interface{}) {
-	if checkLevel(DebugLevel) {
+
 		printlog(ErrorLevel, interf)
-	}
+
 }
 
 func Critical(interf ...interface{}) {
-	if checkLevel(DebugLevel) {
+
 		printlog(CriticalLevel, interf)
-	}
+
 }
 
 func printlog(level Level, interf ...interface{}) {
@@ -121,6 +130,9 @@ func printlog(level Level, interf ...interface{}) {
 		color.Set(color.FgBlue)
 	case ErrorLevel:
 		color.Set(color.FgRed)
+	case OnlyLevel:
+		color.Set(color.BgHiGreen)
+		color.Set(color.FgBlack)
 	case CriticalLevel:
 		color.Set(color.BgHiYellow)
 		color.Set(color.FgRed)
@@ -153,7 +165,7 @@ func checkLevel(level Level) bool {
 	if LoggerSettings.Level >= level {
 		return true
 	}
-	if level == CriticalLevel || level == ErrorLevel {
+	if level == CriticalLevel || level == ErrorLevel || level==OnlyLevel {
 		return true
 	}
 	return false
