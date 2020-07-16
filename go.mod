@@ -1,4 +1,4 @@
-module altafino.io/logger
+module github.com/altafino/logger
 
 go 1.12
 
