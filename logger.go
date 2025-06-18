@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018. Altafino Ltd
+ * Copyright (c) 2024. Altafino Ltd
  * Content:
  * Comment:
  */
